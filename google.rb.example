@@ -6,3 +6,5 @@ $client.authorization.scope = 'https://www.googleapis.com/auth/calendar'
 
 $calendar = $client.discovered_api('calendar', 'v3')
 $calendar_id = "..."
+
+
