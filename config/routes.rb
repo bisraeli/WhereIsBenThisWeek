@@ -1,4 +1,6 @@
 WhereIsBen::Application.routes.draw do
+  resources :events
+
   resources :admin, only: [:index] do
     collection do
       get 'google_authorization_callback'

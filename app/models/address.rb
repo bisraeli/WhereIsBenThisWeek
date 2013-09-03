@@ -1,10 +1,10 @@
 class Address
   extend ActiveModel::Naming
   include ActiveModel::Conversion  ## takes care of initialize for us
-  attr_accessor :name, :street, :city, :state, :zipcode, :creator_id
+  attr_accessor :street, :city, :state, :zipcode, :creator_id
 
   def initialize(options={})
-    @name = options[:name]
+
     @street = options[:street]
     @city = options[:city]
     @state = options[:state]

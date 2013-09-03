@@ -17,11 +17,8 @@ class AdminController < ApplicationController
 
   def index
     # Fetch list of events on the user's default calandar
-    result = $client.execute(:api_method => $calendar.events.list,
-                             :parameters => {'calendarId' => $calendar_id},
-                             :authorization => user_credentials)
-
-    render json: result.data.to_json
+    EventImporter.import_events!
+    redirect_to events_path
   end
 
   def google_authorization_callback

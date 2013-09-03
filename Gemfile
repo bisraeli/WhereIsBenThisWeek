@@ -74,3 +74,9 @@ group :development, :test do
   gem 'meta_request'        # Supporting gem for Rails Panel (Google Chrome extension for Rails development).
                             # https://github.com/dejan/rails_panel/tree/master/meta_request
 end
+
+group :test do
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'spork'
+end

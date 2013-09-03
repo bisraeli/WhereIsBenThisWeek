@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>External:</strong>
+  <%= @event.external_id %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @event.client %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @event.start_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @event.end_time %>
+</p>
+
+<p>
+  <strong>Sequence:</strong>
+  <%= @event.sequence %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @event.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @event.longitude %>
+</p>
+
+<p>
+  <strong>Recurs:</strong>
+  <%= @event.recurs %>
+</p>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
