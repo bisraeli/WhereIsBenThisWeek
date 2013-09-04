@@ -1,0 +1,13 @@
+
+<div id="map">
+</div>
+
+<script type='text/javascript'>
+
+$(document).ready(function() {
+  var map = createMap(40.70771, -73.940398);
+  <%- @events.each do |event| %>
+  createEventMarker(map, <%= raw event.to_json %>);
+  <%- end %>
+});
+</script>

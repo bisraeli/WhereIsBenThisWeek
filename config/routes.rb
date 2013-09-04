@@ -1,4 +1,5 @@
 WhereIsBen::Application.routes.draw do
+  root to: 'application#map'
   resources :events
 
   resources :admin, only: [:index] do

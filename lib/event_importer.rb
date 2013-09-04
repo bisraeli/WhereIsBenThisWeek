@@ -1,15 +1,24 @@
 class EventImporter
+  attr_reader :user_credentials
 
-  def self.import_events!
+  def self.import_events!(user_credentials)
+    self.new(user_credentials).import_all_events
+  end
+
+  def initialize(user_credentials)
+    @user_credentials = user_credentials
+  end
+
+  def import_all_events
     result = $client.execute(:api_method => $calendar.events.list,
                              :parameters => {'calendarId' => $calendar_id},
                              :authorization => user_credentials)
-    self.new.import_events result.data.items
+    import_events result.data.items
   end
 
   def create_event(event, recurs=false)
     address = Geocoder.search("#{event["location"]}")
-    logger.warn("Failed to find location for event: #{JSON(event.to_json)}") if address.blank? || address.first.blank?
+    #logger.warn("Failed to find location for event: #{JSON(event.to_json)}") if address.blank? || address.first.blank?
     return nil if address.blank? || address.first.blank?
 
     latitude = address.first.latitude
@@ -26,16 +35,18 @@ class EventImporter
   end
 
   def import_recurring_events(event)
-    # result = $client.execute(api_method: $calendar.events.instances, ...)
-    # import_events result.data.items, true
+    result = $client.execute(:api_method => $calendar.events.instances,
+                             :parameters => {'calendarId' => $calendar_id, 'eventId' => event["id"]},
+                             :authorization => user_credentials)
+    import_events result.data.items, true
   end
 
-  def import_events(events)
+  def import_events(events, recurs=false)
     events.each do |event|
       unless event["recurrence"].blank?
         import_recurring_events(event)
       else
-        create_event(event)
+        create_event(event, recurs)
       end
     end
   end
