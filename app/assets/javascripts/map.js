@@ -11,8 +11,8 @@ var Colors = {
 var createMap = function(lat, lon) {
 
   var mapOptions = {
-    center: new google.maps.LatLng(lat,lon),
-    zoom: 13,
+    center: new google.maps.LatLng(40.754084,-73.966448),
+    zoom: 12,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   return new google.maps.Map($("#map")[0],mapOptions);
@@ -34,6 +34,7 @@ var createEventMarker = function(map, event) {
     position: new google.maps.LatLng(event.latitude, event.longitude),
     visible: true,
     clickable: true,
+    draggable: true,
     icon: pinImage,
     shadow: pinShadow
   };

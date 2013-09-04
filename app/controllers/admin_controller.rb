@@ -16,6 +16,7 @@ class AdminController < ApplicationController
   end
 
   def index
+    #Event.destroy
     # Fetch list of events on the user's default calandar
     EventImporter.import_events!(user_credentials)
     redirect_to events_path
