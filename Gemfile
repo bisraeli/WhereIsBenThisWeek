@@ -30,6 +30,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'sorcery'
 gem 'geocoder'
 gem 'twitter-bootstrap-rails'
+gem 'twilio-ruby'
 
 
 group :doc do

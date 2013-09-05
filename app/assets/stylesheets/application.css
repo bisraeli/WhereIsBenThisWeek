@@ -13,8 +13,18 @@
  */
 
 #map {
-  height: 500px;
-  width: 500px;
+  height: 350px;
+  width: 700px;
   border: 10px;
   border-style: double;
+}
+
+#map-legend ul {
+  list-style-type: none
+
+}
+
+#map-legend ul li {
+  float: left;
+  width: 100px;
 }

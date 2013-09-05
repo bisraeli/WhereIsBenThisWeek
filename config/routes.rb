@@ -2,6 +2,8 @@ WhereIsBen::Application.routes.draw do
   root to: 'application#map'
   resources :events
 
+  post '/sms' => 'twilio#sms'
+
   resources :admin, only: [:index] do
     collection do
       get 'google_authorization_callback'

@@ -16,10 +16,16 @@ class AdminController < ApplicationController
   end
 
   def index
-    #Event.destroy
-    # Fetch list of events on the user's default calandar
-    EventImporter.import_events!(user_credentials)
-    redirect_to events_path
+    if session[:retrieving_events]
+      redirect_to(events_path)
+    else
+      session[:retrieving_events] = true
+      Event.destroy_all('id is not null')
+      # Fetch list of events on the user's default calandar
+      EventImporter.import_events!(user_credentials)
+      session[:retrieving_events] = nil
+      redirect_to events_path
+    end
   end
 
   def google_authorization_callback

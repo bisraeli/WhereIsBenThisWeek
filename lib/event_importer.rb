@@ -36,7 +36,7 @@ class EventImporter
 
   def import_recurring_events(event)
     result = $client.execute(:api_method => $calendar.events.instances,
-                             :parameters => {'calendarId' => $calendar_id, 'eventId' => event["id"]},
+                             :parameters => {'calendarId' => $calendar_id, 'eventId' => event["id"], 'maxResults' => 10},
                              :authorization => user_credentials)
     import_events result.data.items, true
   end
