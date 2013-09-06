@@ -7,9 +7,11 @@
 $(document).ready(function() {
   createLegend();
   createMap(40.70771, -73.940398);
-  <%- @events.each do |event| %>
-  createEventMarker(<%= raw event.to_json %>);
-  <%- end %>
+  $.get('<%= events_path format: 'json' %>').success(function(data){
+    $.each(data, function(){
+      createEventMarker(this)
+    });
+  });
 });
 </script>
 
