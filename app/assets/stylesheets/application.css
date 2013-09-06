@@ -11,20 +11,38 @@
  *= require_self
  *= require_tree .
  */
+html body{
+  background-color: #FFBF00;
+}
+
+#site-title p{
+  font-weight: bold;
+  font: serif;
+  font-size: 72px;
+  line-height: 15px;
+  margin-left: 50px;
+  font-family: "Trebuchet MS, Helvetica, sans-serif";
+}
 
 #map {
-  height: 350px;
-  width: 700px;
+  height: 500px;
+  width: 500px;
   border: 10px;
-  border-style: double;
+  border-style: groove;
+  border-radius: 10px;
+  margin-left: 400px;
+  margin-right: 40px;
 }
 
 #map-legend ul {
-  list-style-type: none
+  list-style-type: none;
+
 
 }
 
 #map-legend ul li {
   float: left;
-  width: 100px;
+  width: 50px;
+  font-size: 10pt;
+  font-family: "Courier New, Courier, monospace";
 }
