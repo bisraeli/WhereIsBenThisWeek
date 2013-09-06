@@ -43,7 +43,7 @@ var legendItem = function(dayOfWeek) {
 var createMap = function(lat, lon) {
   var $map = $("#map").empty();
   var mapOptions = {
-    center: new google.maps.LatLng(42.3488218, -83.0593771),
+    center: new google.maps.LatLng(40.754084, -73.966448),
     zoom: 13,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
