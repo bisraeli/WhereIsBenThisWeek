@@ -1,0 +1,23 @@
+
+<h1 id= "site-title"> Where's Ben?</h1>
+<br>
+<div class="push-over">
+  Show the week of <input id='date-picker' type="date" value="<%= Date.today %>" />
+</div>
+<br>
+
+<div id='map-legend'></div>
+<br>
+<p class="push-over">
+  "Where's Ben" appends data from Ben's google Calendar to a Google Map view, highlighting where he is by week and by day.
+</p>
+
+<p class="push-over" style= "font-family: 'Courier New', Courier, monospace">
+  Use Twilio to send text-messages directly to my phone!
+  <%=form_tag("/sms",method: :post) do%>
+    <input type="text" name="sender"  placeholder="Name">
+    <input type="text" name="message" placeholder="Message">
+    <input type="text" name="number"  placeholder="Phone">
+    <button>Send</button>
+  <% end %>
+</p>

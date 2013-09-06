@@ -1,12 +1,13 @@
-<div id = "site-title">
-  <p> Where's Ben? </p>
-</div>
 
-<div id ="container">
-  <div class='row-fluid'>
-    Show the week of <input id='date-picker' type="date" />
+  <div class="row-fluid">
+    <div class="lhs span6">
+      <%= render partial: "shared/lhs_map"%>
+
+    </div>
+    <div class="span6">
+      <div id="map"></div>
+    </div>
   </div>
-</div>
 
 <script type='text/javascript'>
 $(document).ready(function() {
@@ -15,17 +16,3 @@ $(document).ready(function() {
   initializeMapAndMarkers(baseEventsUrl);
 });
 </script>
-
-<div class='row-fluid'>
-  <div id="map"></div>
-  <div id='map-legend'></div>
-</div>
-
-<p> Use Twilio to send text-messages directly to my phone!</p>
-<%=form_tag("/sms",method: :post) do%>
-  <input type="text" name="sender"  placeholder="Name">
-  <input type="text" name="message" placeholder="Message">
-  <input type="text" name="number"  placeholder="Phone">
-  <button>Send</button>
-<% end %>
-

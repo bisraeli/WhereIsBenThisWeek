@@ -13,36 +13,41 @@
  */
 html body{
   background-color: #FFBF00;
+  font-family: 'Courier New', Courier, monospace;
 }
 
-#site-title p{
+#site-title{
+  padding-top: 8px;
   font-weight: bold;
   font: serif;
   font-size: 72px;
-  line-height: 15px;
-  margin-left: 50px;
-  font-family: "Trebuchet MS, Helvetica, sans-serif";
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+.lhs{
+  padding-left: 7px;
 }
 
 #map {
   height: 500px;
-  width: 500px;
+  width: 420px;
   border: 10px;
   border-style: groove;
   border-radius: 10px;
-  margin-left: 400px;
-  margin-right: 40px;
+  margin-top: 10px;
 }
 
 #map-legend ul {
   list-style-type: none;
+}
 
-
+.push-over{
+  margin-left: 5px;
 }
 
 #map-legend ul li {
   float: left;
-  width: 50px;
+  width: 40px;
   font-size: 10pt;
-  font-family: "Courier New, Courier, monospace";
+  font-family: "Courier New", Courier, monospace;
 }

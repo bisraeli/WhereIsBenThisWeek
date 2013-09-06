@@ -1,11 +1,11 @@
 var Colors = {
-  'Sunday': 'FF00FF',
-  'Monday': '00FF00',
-  'Tuesday': '0000FF',
-  'Wednesday': 'FFFF00',
-  'Thursday': 'FF9900',
-  'Friday': 'FF0000',
-  'Saturday': 'DDD'
+  'Sun': 'FF00FF',
+  'Mon': '00FF00',
+  'Tue': '0000FF',
+  'Wed': 'FFFF00',
+  'Thu': 'FF9900',
+  'Fri': 'FF0000',
+  'Sat': 'DDD'
 };
 
 var map, baseEventsUrl, overlappingMarkerSpiderfier, markerInfoWindow, allLocations;
@@ -27,6 +27,7 @@ var createLegend = function() {
   for (var dayOfWeek in Colors) {
     list.append(legendItem(dayOfWeek));
   }
+  list.append('<div class="clearfix"> </div>');
 };
 
 var legendItem = function(dayOfWeek) {
@@ -85,13 +86,13 @@ var createEventMarker = function(event) {
   var marker = new google.maps.Marker(markerOptions);
   marker.desc = event.client;
   overlappingMarkerSpiderfier.addMarker(marker);
-  google.maps.event.addListener('mouseover', function(marker, event) {
-    markerInfoWindow.setContent(marker.desc);
-    markerInfoWindow.open(map, marker);
-  });
-  google.maps.event.addListener(marker,'click',function(){
-    showEventInfo(event, marker);
-  });
+  // google.maps.event.addListener('mouseover', function(marker, event) {
+  //   markerInfoWindow.setContent(marker.desc);
+  //   markerInfoWindow.open(map, marker);
+  // });
+  // google.maps.event.addListener(marker,'click',function(){
+  //   showEventInfo(event, marker);
+  // });
 };
 
 var showEventInfo = function(){

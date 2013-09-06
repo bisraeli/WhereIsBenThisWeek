@@ -4,8 +4,8 @@ class TwilioController < ApplicationController
     @client.account.sms.messages.create(
       :from => '+14242887652',
       :to => '+13109232319',
-      :body => (params[:message], params[:number], params[:sender])
+      :body => "#{params[:message]}, #{params[:number]}, #{params[:sender]}"
     )
-    redirect to root_path
+    redirect_to root_path
   end
 end
