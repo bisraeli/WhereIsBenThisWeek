@@ -8,10 +8,17 @@ var Colors = {
   'Saturday': 'DDD'
 };
 
-var map;
-var overlappingMarkerSpiderfier;
-var markerInfoWindow;
-var allLocations = {};
+var map, baseEventsUrl, overlappingMarkerSpiderfier, markerInfoWindow, allLocations;
+
+var initializeMapAndMarkers = function(eventsUrl) {
+  allLocations = {};
+  createMap(40.70771, -73.940398);
+  $.get(eventsUrl).success(function(data){
+    $.each(data, function(){
+      createEventMarker(this)
+    });
+  });
+};
 
 var createLegend = function() {
   var legendContainer = $("#map-legend");
@@ -34,18 +41,15 @@ var legendItem = function(dayOfWeek) {
 };
 
 var createMap = function(lat, lon) {
+  var $map = $("#map").empty();
   var mapOptions = {
     center: new google.maps.LatLng(42.3488218, -83.0593771),
     zoom: 13,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  map = new google.maps.Map($("#map")[0],mapOptions);
+  map = new google.maps.Map($map[0],mapOptions);
   overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(map);
   markerInfoWindow  = new google.maps.InfoWindow();
-  overlappingMarkerSpiderfier.addListener('hover', function(marker, event) {
-    markerInfoWindow.setContent(marker.desc);
-    markerInfoWindow.open(map, marker);
-  });
   overlappingMarkerSpiderfier.addListener('spiderfy', function(markers) {
     markerInfoWindow.close();
   });
@@ -81,6 +85,10 @@ var createEventMarker = function(event) {
   var marker = new google.maps.Marker(markerOptions);
   marker.desc = event.client;
   overlappingMarkerSpiderfier.addMarker(marker);
+  google.maps.event.addListener('mouseover', function(marker, event) {
+    markerInfoWindow.setContent(marker.desc);
+    markerInfoWindow.open(map, marker);
+  });
   google.maps.event.addListener(marker,'click',function(){
     showEventInfo(event, marker);
   });
