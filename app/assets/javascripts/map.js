@@ -45,7 +45,7 @@ var legendItem = function(index) {
 var createMap = function(lat, lon) {
   var mapOptions = {
     center: new google.maps.LatLng(40.754084,-73.966448),
-    zoom: 13,
+    zoom: 12,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   map = new google.maps.Map($("#map")[0],mapOptions);
