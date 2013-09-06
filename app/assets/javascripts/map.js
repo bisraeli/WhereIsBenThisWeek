@@ -1,38 +1,36 @@
 var Colors = {
-  0: 'FF00FF',
-  1: '00FF00',
-  2: '0000FF',
-  3: 'FFFF00',
-  4: 'FF9900',
-  5: 'FF0000',
-  6: 'DDD'
+  'Sunday': 'FF00FF',
+  'Monday': '00FF00',
+  'Tuesday': '0000FF',
+  'Wednesday': 'FFFF00',
+  'Thursday': 'FF9900',
+  'Friday': 'FF0000',
+  'Saturday': 'DDD'
 };
 
-var DaysOfWeek = {
-  0: 'Sunday',
-  1: 'Monday',
-  2: 'Tuesday',
-  3: 'Wednesday',
-  4: 'Thursday',
-  5: 'Friday',
-  6: 'Saturday'
+var map, baseEventsUrl, overlappingMarkerSpiderfier, markerInfoWindow, allLocations;
+
+var initializeMapAndMarkers = function(eventsUrl) {
+  allLocations = {};
+  createMap(40.70771, -73.940398);
+  $.get(eventsUrl).success(function(data){
+    $.each(data, function(){
+      createEventMarker(this)
+    });
+  });
 };
 
-var map;
-var oms;
-var iw;
 var createLegend = function() {
   var legendContainer = $("#map-legend");
   var list = $('<ul></ul>');
   legendContainer.append(list);
-  for (var i in Colors) {
-    list.append(legendItem(i));
+  for (var dayOfWeek in Colors) {
+    list.append(legendItem(dayOfWeek));
   }
 };
 
-var legendItem = function(index) {
-  var pinImageSrc = pinImageSource(Colors[index]);
-  var dayOfWeek = DaysOfWeek[index];
+var legendItem = function(dayOfWeek) {
+  var pinImageSrc = pinImageSource(Colors[dayOfWeek]);
   return $('<li><img src="' +
     pinImageSrc +
     '" altText="' +
@@ -43,20 +41,17 @@ var legendItem = function(index) {
 };
 
 var createMap = function(lat, lon) {
+  var $map = $("#map").empty();
   var mapOptions = {
-    center: new google.maps.LatLng(40.754084,-73.966448),
+    center: new google.maps.LatLng(40.754084, -73.966448),
     zoom: 12,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  map = new google.maps.Map($("#map")[0],mapOptions);
-  oms = new OverlappingMarkerSpiderfier(map);
-  iw  = new google.maps.InfoWindow();
-  oms.addListener('hover', function(marker, event) {
-    iw.setContent(marker.desc);
-    iw.open(map, marker);
-  });
-  oms.addListener('spiderfy', function(markers) {
-    iw.close();
+  map = new google.maps.Map($map[0],mapOptions);
+  overlappingMarkerSpiderfier = new OverlappingMarkerSpiderfier(map);
+  markerInfoWindow  = new google.maps.InfoWindow();
+  overlappingMarkerSpiderfier.addListener('spiderfy', function(markers) {
+    markerInfoWindow.close();
   });
 };
 
@@ -65,34 +60,37 @@ var pinImageSource = function(pinColor) {
 }
 
 var createEventMarker = function(event) {
-  console.log(event.start_time);
-  var pinColor = Colors[(new Date(event.start_time)).getDay()];
-  var pinImage = new google.maps.MarkerImage(pinImageSource(pinColor),
-        new google.maps.Size(21, 34),
-        new google.maps.Point(0, 0),
-        new google.maps.Point(10, 34));
-  var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-        new google.maps.Size(40, 37),
-        new google.maps.Point(5, 5),
-        new google.maps.Point(12, 35));
+  var locationKey = event.latitude + "," + event.longitude;
+  if (!allLocations.hasOwnProperty(locationKey)) {
+    allLocations[locationKey] = 0;
+  } else {
+    allLocations[locationKey] = allLocations[locationKey] + 0.001;
+  }
 
+  var pinColor = Colors[event.day_of_week];
   var markerOptions = {
-    position: new google.maps.LatLng(event.latitude, event.longitude),
+    position: new google.maps.LatLng(event.latitude + allLocations[locationKey], event.longitude),
     visible: true,
     clickable: true,
-    //draggable: true,
-    icon: pinImage,
-    // shadow: pinShadow,
+    // draggable: true,
+    icon: {
+      url: pinImageSource(pinColor),
+      size: new google.maps.Size(21, 34),
+      anchor: google.maps.Point(0, 0)
+    },
     map: map,
-    title: event.client//event.start_time + "-" + event.end_time
+    title: event.client + "\nFrom " + event.start_time + " to " + event.end_time
   };
 
   var marker = new google.maps.Marker(markerOptions);
   marker.desc = event.client;
-  oms.addMarker(marker);
+  overlappingMarkerSpiderfier.addMarker(marker);
+  google.maps.event.addListener('mouseover', function(marker, event) {
+    markerInfoWindow.setContent(marker.desc);
+    markerInfoWindow.open(map, marker);
+  });
   google.maps.event.addListener(marker,'click',function(){
     showEventInfo(event, marker);
-    // window.location.href = '/jams/start';
   });
 };
 

@@ -4,7 +4,8 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    start_time = (params[:start_time] ? Date.parse(params[:start_time]) : Date.today).beginning_of_week
+    @events = Event.where('start_time >= ? and end_time <= ?', start_time, start_time + 7)
   end
 
   # GET /events/1
