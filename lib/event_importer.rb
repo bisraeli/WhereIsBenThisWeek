@@ -11,7 +11,7 @@ class EventImporter
 
   def import_all_events
     result = $client.execute(:api_method => $calendar.events.list,
-                             :parameters => {'calendarId' => $calendar_id, 'timeMin' => DateTime.now.beginning_of_day, 'timeMax' => (DateTime.now + 4.months).end_of_day, 'singleEvents' => true},
+                             :parameters => {'calendarId' => $calendar_id},
                              :authorization => user_credentials)
     import_events result.data.items
   end
